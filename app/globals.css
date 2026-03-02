@@ -1,0 +1,185 @@
+/**
+ * Momen Design System - Global CSS Variables
+ * Calming blue palette with warm cream backgrounds
+ */
+
+:root {
+  /* ============================================
+     PRIMARY PALETTE
+     ============================================ */
+  --color-slate: #355872;      /* rgb(53, 88, 114)  - Primary actions, headers */
+  --color-sky: #7AAACE;        /* rgb(122, 170, 206) - Secondary, accents */
+  --color-ice: #9CD5FF;        /* rgb(156, 213, 255) - Highlights, info */
+  --color-cream: #F7F8F0;      /* rgb(247, 248, 240) - Backgrounds */
+
+  /* ============================================
+     BACKGROUNDS
+     ============================================ */
+  --bg-page: var(--color-cream);
+  --bg-card: #FFFFFF;
+  --bg-card-secondary: rgba(255, 255, 255, 0.8);
+  --bg-overlay: rgba(53, 88, 114, 0.5);
+  --bg-sidebar: var(--color-slate);
+  --bg-header: var(--color-slate);
+  --bg-table-even: #FFFFFF;
+  --bg-table-odd: var(--color-cream);
+  --bg-table-hover: rgba(156, 213, 255, 0.1);
+  --bg-table-selected: rgba(156, 213, 255, 0.15);
+
+  /* ============================================
+     TEXT COLORS
+     ============================================ */
+  --text-primary: var(--color-slate);
+  --text-secondary: var(--color-sky);
+  --text-muted: rgba(122, 170, 206, 0.6);
+  --text-on-dark: #FFFFFF;
+  --text-link: var(--color-sky);
+  --text-link-hover: var(--color-ice);
+
+  /* ============================================
+     BORDERS
+     ============================================ */
+  --border-default: rgba(122, 170, 206, 0.2);
+  --border-medium: rgba(122, 170, 206, 0.3);
+  --border-strong: rgba(122, 170, 206, 0.4);
+  --border-focus: var(--color-ice);
+  --border-input: rgba(122, 170, 206, 0.4);
+
+  /* ============================================
+     INTERACTIVE STATES
+     ============================================ */
+  --hover-bg: var(--color-cream);
+  --hover-border: rgba(122, 170, 206, 0.4);
+  --active-bg: rgba(122, 170, 206, 0.2);
+  --active-border: var(--color-sky);
+  --focus-ring: rgba(156, 213, 255, 0.4);
+  --focus-bg: rgba(156, 213, 255, 0.1);
+  --disabled-bg: rgba(247, 248, 240, 0.5);
+  --disabled-text: rgba(122, 170, 206, 0.4);
+  --disabled-border: rgba(122, 170, 206, 0.1);
+
+  /* ============================================
+     BUTTON COLORS
+     ============================================ */
+  --btn-primary-bg: var(--color-slate);
+  --btn-primary-text: #FFFFFF;
+  --btn-primary-hover: #2d4a61;
+  --btn-primary-active: #253d52;
+
+  --btn-secondary-bg: var(--color-sky);
+  --btn-secondary-text: #FFFFFF;
+  --btn-secondary-hover: #6590b5;
+  --btn-secondary-active: #547a9b;
+
+  --btn-ghost-bg: transparent;
+  --btn-ghost-text: var(--color-slate);
+  --btn-ghost-hover: var(--color-cream);
+  --btn-ghost-active: rgba(122, 170, 206, 0.2);
+
+  --btn-outline-bg: transparent;
+  --btn-outline-text: var(--color-slate);
+  --btn-outline-border: var(--color-slate);
+  --btn-outline-hover-bg: rgba(53, 88, 114, 0.05);
+
+  /* ============================================
+     SEMANTIC / STATUS COLORS
+     ============================================ */
+  --color-success: #10B981;
+  --color-success-bg: rgba(16, 185, 129, 0.1);
+  --color-warning: #F59E0B;
+  --color-warning-bg: rgba(245, 158, 11, 0.1);
+  --color-error: #EF4444;
+  --color-error-bg: rgba(239, 68, 68, 0.1);
+  --color-info: var(--color-sky);
+  --color-info-bg: rgba(122, 170, 206, 0.15);
+
+  /* ============================================
+     SHADOWS
+     ============================================ */
+  --shadow-sm: 0 1px 2px rgba(53, 88, 114, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(53, 88, 114, 0.1),
+               0 2px 4px -1px rgba(53, 88, 114, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(53, 88, 114, 0.1),
+               0 4px 6px -2px rgba(53, 88, 114, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(53, 88, 114, 0.1),
+               0 10px 10px -5px rgba(53, 88, 114, 0.04);
+
+  /* ============================================
+     GRADIENTS
+     ============================================ */
+  --gradient-hero: linear-gradient(135deg, var(--color-slate) 0%, var(--color-sky) 100%);
+  --gradient-cta: linear-gradient(90deg, var(--color-sky) 0%, var(--color-ice) 100%);
+  --gradient-overlay: linear-gradient(180deg, transparent 0%, rgba(53, 88, 114, 0.8) 100%);
+  --gradient-shimmer: linear-gradient(90deg,
+    rgba(122, 170, 206, 0.1) 0%,
+    rgba(122, 170, 206, 0.2) 50%,
+    rgba(122, 170, 206, 0.1) 100%
+  );
+
+  /* ============================================
+     SPACING & SIZING
+     ============================================ */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+
+  /* ============================================
+     TRANSITIONS
+     ============================================ */
+  --transition-fast: 150ms ease;
+  --transition-base: 200ms ease;
+  --transition-slow: 300ms ease;
+}
+
+/* ============================================
+   DARK MODE (Future - Optional)
+   ============================================ */
+@media (prefers-color-scheme: dark) {
+  /* Reserved for future dark mode implementation */
+}
+
+/* ============================================
+   BASE STYLES
+   ============================================ */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+.text-primary { color: var(--text-primary); }
+.text-secondary { color: var(--text-secondary); }
+.text-muted { color: var(--text-muted); }
+.text-on-dark { color: var(--text-on-dark); }
+
+.bg-page { background-color: var(--bg-page); }
+.bg-card { background-color: var(--bg-card); }
+.bg-sidebar { background-color: var(--bg-sidebar); }
+
+.border-default { border-color: var(--border-default); }
+.border-focus { border-color: var(--border-focus); }
+
+/* Focus visible styles for accessibility */
+:focus-visible {
+  outline: 2px solid var(--color-ice);
+  outline-offset: 2px;
+}
