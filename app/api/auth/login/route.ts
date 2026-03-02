@@ -22,15 +22,6 @@ const loginSchema = z.object({
 });
 
 // ============================================
-// REGISTER SCHEMA
-// ============================================
-const registerSchema = z.object({
-  email: z.string().email('Invalid email format'),
-  password: z.string().min(8, 'Password must be at least 8 characters'),
-  name: z.string().min(2, 'Name must be at least 2 characters'),
-});
-
-// ============================================
 // POST /api/auth/login
 // ============================================
 export async function POST(request: NextRequest) {
