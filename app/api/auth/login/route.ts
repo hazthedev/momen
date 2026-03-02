@@ -8,9 +8,9 @@ import { z } from 'zod';
 import { eq } from 'drizzle-orm';
 import { db } from '@/lib/db';
 import { users } from '@/lib/db/schema';
-import { comparePassword, validatePassword, isCommonPassword, hasWeakPatterns } from '@/lib/auth/password';
-import { createSession, generateAccessToken, generateRefreshToken, setAuthCookies } from '@/lib/auth/session';
-import { hashPassword } from '@/lib/auth/password';
+import { comparePassword } from '@/lib/auth/password';
+import { createSession } from '@/lib/auth/session';
+import { generateAccessToken, generateRefreshToken, setAuthCookies } from '@/lib/auth/jwt';
 
 // ============================================
 // VALIDATION SCHEMA

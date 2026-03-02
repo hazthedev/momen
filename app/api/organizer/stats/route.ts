@@ -45,7 +45,7 @@ export async function GET(request: NextRequest) {
 
     // Calculate total photos across all events
     let totalPhotos = 0;
-    let recentUploads = 0;
+    const recentUploads = 0;
     const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
 
     for (const event of allEvents) {

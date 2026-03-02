@@ -417,12 +417,6 @@ export const useToastHelpers = () => {
   };
 };
 
-// Re-export removeToast for promise helper
-const removeToast = (id: string) => {
-  const { removeToast: _remove } = useToast();
-  _remove(id);
-};
-
 /* ============================================
    EXPORTS
    ============================================ */

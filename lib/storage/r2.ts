@@ -3,7 +3,7 @@
  * Handle image storage and processing with Cloudflare R2
  */
 
-import { PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
+import { PutObjectCommand, DeleteObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import sharp from 'sharp';
 
 // R2 configuration
@@ -46,8 +46,6 @@ export class R2StorageService {
     if (!R2_ACCOUNT_ID || !R2_ACCESS_KEY_ID || !R2_SECRET_ACCESS_KEY || !R2_BUCKET_NAME) {
       throw new Error('R2 credentials not configured');
     }
-
-    const { S3Client } = require('@aws-sdk/client-s3');
 
     this.client = new S3Client({
       region: 'auto',

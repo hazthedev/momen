@@ -222,7 +222,7 @@ export default function PublicGalleryPage() {
             <Images className="w-8 h-8 text-sky" />
           </div>
           <h2 className="text-xl font-semibold text-slate mb-2">Event Not Found</h2>
-          <p className="text-sky text-sm">This event doesn't exist or is no longer available.</p>
+          <p className="text-sky text-sm">This event does not exist or is no longer available.</p>
         </div>
       </div>
     );

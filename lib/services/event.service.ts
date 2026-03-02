@@ -78,7 +78,7 @@ export class EventService {
     const tenantDb = getTenantDb(this.tenantId);
     const { search, status, limit = 50, offset = 0, sortBy = 'created_at', sortOrder = 'desc' } = filters;
 
-    let query = tenantDb.query.events.findMany({
+    const query = tenantDb.query.events.findMany({
       where: (events, { eq }) => {
         const conditions = [eq(events.tenantId, this.tenantId)];
 

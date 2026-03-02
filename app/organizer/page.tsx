@@ -107,7 +107,7 @@ export default function DashboardPage() {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-slate">Dashboard</h1>
-          <p className="text-sky">Welcome back! Here's what's happening with your events.</p>
+          <p className="text-sky">Welcome back! Here&apos;s what&apos;s happening with your events.</p>
         </div>
 
         <Link
