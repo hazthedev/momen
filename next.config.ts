@@ -37,7 +37,6 @@ const nextConfig = {
   // Environment variables available to the browser
   env: {
     APP_URL: process.env.APP_URL,
-    NODE_ENV: process.env.NODE_ENV,
   },
 
   // Webpack configuration

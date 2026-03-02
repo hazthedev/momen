@@ -3,7 +3,7 @@
  * Fixed version of Galería schema with proper types and RLS
  */
 
-import { pgTable, text, uuid, timestamp, boolean, integer, jsonb, index } from 'drizzle-orm/pg-core';
+import { pgTable, text, uuid, timestamp, boolean, integer, jsonb, index, uniqueIndex } from 'drizzle-orm/pg-core';
 import { sql } from 'drizzle-orm';
 
 // ============================================
@@ -110,7 +110,7 @@ export const events = pgTable('events', {
   updatedAt: timestamp('updated_at').notNull().defaultNow(),
 }, (table) => ({
   // Unique constraint on tenant + slug
-  tenantSlugIdx: index('events_tenant_slug_idx').unique().on(table.tenantId, table.slug),
+  tenantSlugIdx: uniqueIndex('events_tenant_slug_idx').on(table.tenantId, table.slug),
   // Index for organizer lookup
   organizerIdx: index('events_organizer_idx').on(table.organizerId),
 }));

@@ -40,11 +40,32 @@ After analyzing the Galería codebase with multiple AI agents, we identified cri
 
 ## Project Status
 
-**Phase**: Planning 📋
+**Phase**: MVP Complete ✅
 
-See [PLAN.md](./PLAN.md) for complete implementation details.
+Core features implemented:
+- ✅ Authentication (login/register)
+- ✅ Event Management (CRUD)
+- ✅ Photo Upload & Gallery
+- ✅ Organizer Dashboard
+- ✅ Public Gallery (guest upload)
+- ✅ Multi-tenant with RLS
 
-## Getting Started (Coming Soon)
+**Coming Soon** (Phase 2):
+- Photo Likes & Reactions
+- Attendance System
+- Lucky Draw
+- Photo Challenge
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 18+
+- PostgreSQL 14+
+- Redis 6+
+- Cloudflare R2 account (or S3-compatible storage)
+
+### Installation
 
 ```bash
 # Clone repository
@@ -54,15 +75,26 @@ cd momen
 # Install dependencies
 npm install
 
-# Set up environment variables
-cp .env.example .env
+# Copy environment variables
+cp .env.example .env.local
 
-# Run database migrations
+# Edit .env.local with your values:
+# - DATABASE_URL (PostgreSQL connection)
+# - REDIS_URL (Redis connection)
+# - JWT_SECRET (generate with: openssl rand -base64 32)
+# - R2_* (Cloudflare R2 credentials)
+
+# Generate database client
+npm run db:generate
+
+# Run migrations
 npm run db:migrate
 
 # Start development server
 npm run dev
 ```
+
+Visit http://localhost:3000 to see the app.
 
 ## Documentation
 
