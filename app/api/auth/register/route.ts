@@ -8,7 +8,7 @@ import { z } from 'zod';
 import { eq } from 'drizzle-orm';
 import { db } from '@/lib/db';
 import { users, tenants } from '@/lib/db/schema';
-import { hashPassword } from '@/lib/auth/password';
+import { hashPassword, validatePassword, isCommonPassword, hasWeakPatterns } from '@/lib/auth/password';
 import { createSession } from '@/lib/auth/session';
 import { generateAccessToken, generateRefreshToken, setAuthCookies } from '@/lib/auth/jwt';
 
@@ -111,7 +111,7 @@ export async function POST(request: NextRequest) {
       userId: user.id,
       tenantId: user.tenantId,
       email: user.email,
-      name: user.name,
+      name: user.name ?? undefined,
       role: user.role,
     });
 
@@ -120,7 +120,7 @@ export async function POST(request: NextRequest) {
       id: user.id,
       tenantId: user.tenantId,
       email: user.email,
-      name: user.name,
+      name: user.name ?? undefined,
       role: user.role,
     });
 
