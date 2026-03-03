@@ -5,13 +5,13 @@
 
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Search, Plus, Filter, Calendar, List } from 'lucide-react';
 import { EventCard } from './EventCard';
-import type { IEvent } from '@/lib/db/schema';
+import type { Event } from '@/lib/db/schema';
 
 interface EventListProps {
-  initialEvents?: IEvent[];
+  initialEvents?: Event[];
   onEventDelete?: (eventId: string) => void;
   onEventStatusChange?: (eventId: string, status: 'draft' | 'active' | 'ended') => void;
 }
@@ -20,7 +20,7 @@ type ViewMode = 'grid' | 'list';
 type StatusFilter = 'all' | 'draft' | 'active' | 'ended';
 
 export function EventList({ initialEvents = [], onEventDelete, onEventStatusChange }: EventListProps) {
-  const [events, setEvents] = useState<IEvent[]>(initialEvents);
+  const [events, setEvents] = useState<Event[]>(initialEvents);
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all');
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
@@ -195,7 +195,7 @@ export function EventList({ initialEvents = [], onEventDelete, onEventStatusChan
           {filteredEvents.map((event) => (
             <EventCard
               key={event.id}
-              event={{ ...event, photo_count: 0 }}
+              event={{ ...event, photo_count: 0, settings: event.settings as { photoApproval?: boolean; allowGuestUpload?: boolean; autoApprove?: boolean } | undefined }}
               onDelete={handleDelete}
               onStatusChange={handleStatusChange}
             />

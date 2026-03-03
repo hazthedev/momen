@@ -49,11 +49,11 @@ export function getPool(): pg.Pool {
 
       // Pool event logging (development only)
       if (process.env.NODE_ENV === 'development') {
-        pool.on('connect', (client) => {
+        pool.on('connect', (_client) => {
           console.log('[DB] New client connected');
         });
 
-        pool.on('remove', (client) => {
+        pool.on('remove', (_client) => {
           console.log('[DB] Client removed');
         });
 
@@ -91,7 +91,7 @@ export class TenantDatabase {
    * Execute a query with tenant context
    * Automatically sets tenant_id for RLS
    */
-  async query<T = unknown>(text: string, params?: unknown[]) {
+  async query(text: string, params?: unknown[]): Promise<any> {
     const client = await getPool().connect();
 
     try {

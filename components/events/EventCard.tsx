@@ -8,10 +8,10 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { Calendar, MapPin, Image, MoreVertical, Copy, ExternalLink, Trash2, Edit } from 'lucide-react';
-import type { IEvent } from '@/lib/db/schema';
+import type { Event } from '@/lib/db/schema';
 
 interface EventCardProps {
-  event: IEvent & { photo_count?: number };
+  event: Event & { photo_count?: number; settings?: { photoApproval?: boolean; allowGuestUpload?: boolean; autoApprove?: boolean } };
   onDelete?: (eventId: string) => void;
   onStatusChange?: (eventId: string, status: 'draft' | 'active' | 'ended') => void;
 }

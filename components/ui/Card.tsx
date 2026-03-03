@@ -70,7 +70,7 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
           className={cn(cardVariants({ variant, size, className }))}
           {...props}
         >
-          <CardSkeleton size={size} />
+          <CardSkeleton size={size ?? undefined} />
         </div>
       );
     }
@@ -208,7 +208,7 @@ export interface EventCardProps {
 }
 
 const EventCard = React.forwardRef<HTMLDivElement, EventCardProps>(
-  ({ id, title, date, photoCount, status, thumbnail, onClick, className }, ref) => {
+  ({ id: _id, title, date, photoCount, status, thumbnail, onClick, className }, ref) => {
     const [imageLoaded, setImageLoaded] = React.useState(false);
     const [imageError, setImageError] = React.useState(false);
 

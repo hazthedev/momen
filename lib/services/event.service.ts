@@ -3,11 +3,17 @@
  * Business logic for event management
  */
 
-import { eq, and, desc, asc, sql } from 'drizzle-orm';
-import { db } from '@/lib/db';
-import { events, tenants } from '@/lib/db/schema';
+import { and, desc, asc, sql } from 'drizzle-orm';
+import { events } from '@/lib/db/schema';
 import { getTenantDb } from '@/lib/db';
-import type { IEvent, IEventCreate, IEventUpdate } from '@/lib/db/schema'; // We'll create types
+import type { Event, NewEvent } from '@/lib/db/schema';
+
+// ============================================
+// TYPE ALIASES
+// ============================================
+type IEventCreate = Omit<NewEvent, 'id' | 'tenantId' | 'slug' | 'shortCode' | 'createdAt' | 'updatedAt'> & Partial<Pick<NewEvent, 'slug' | 'shortCode' | 'organizerId'>>;
+type IEventUpdate = Partial<Pick<NewEvent, 'name' | 'slug' | 'shortCode' | 'description' | 'startDate' | 'endDate' | 'location' | 'status' | 'settings' | 'updatedAt'>>;
+type IEvent = Event;
 
 // ============================================
 // TYPES
@@ -21,7 +27,7 @@ export interface EventFilters {
   sortOrder?: 'asc' | 'desc';
 }
 
-export interface EventWithPhotoCount extends IEvent {
+export interface EventWithPhotoCount extends Event {
   photo_count?: number;
 }
 

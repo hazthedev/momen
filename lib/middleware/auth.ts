@@ -4,7 +4,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { getSession, validateSession } from '../session';
+import { validateSession } from '../auth/session';
 
 // ============================================
 // PUBLIC PATHS (no auth required)

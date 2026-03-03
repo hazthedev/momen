@@ -47,14 +47,6 @@ interface AlertContextValue {
 
 const AlertContext = React.createContext<AlertContextValue | null>(null);
 
-const useAlertContext = () => {
-  const context = React.useContext(AlertContext);
-  if (!context) {
-    throw new Error('Alert components must be used within an Alert');
-  }
-  return context;
-};
-
 /* ============================================
    ALERT COMPONENT
    ============================================ */
@@ -246,14 +238,14 @@ interface Toast {
   };
 }
 
-interface AlertContextValue {
+interface ToastContextValue {
   toasts: Toast[];
-  addToast: (toast: Omit<Toast, 'id'>) => void;
+  addToast: (toast: Omit<Toast, 'id'>) => string;
   removeToast: (id: string) => void;
   clearToasts: () => void;
 }
 
-const ToastContext = React.createContext<AlertContextValue | null>(null);
+const ToastContext = React.createContext<ToastContextValue | null>(null);
 
 export const useToast = () => {
   const context = React.useContext(ToastContext);
@@ -367,7 +359,7 @@ const Toast = ({ toast }: { toast: Toast }) => {
    CONVENIENCE HOOKS
    ============================================ */
 export const useToastHelpers = () => {
-  const { addToast } = useToast();
+  const { addToast, removeToast } = useToast();
 
   return {
     success: (message: string, options?: Partial<Omit<Toast, 'id' | 'message' | 'variant'>>) =>

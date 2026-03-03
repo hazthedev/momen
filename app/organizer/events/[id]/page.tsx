@@ -8,14 +8,14 @@
 import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { EventForm, EventFormData } from '@/components/events/EventForm';
-import type { IEvent } from '@/lib/db/schema';
+import type { Event } from '@/lib/db/schema';
 
 export default function EventDetailPage() {
   const router = useRouter();
   const params = useParams();
   const eventId = params.id as string;
 
-  const [event, setEvent] = useState<IEvent | null>(null);
+  const [event, setEvent] = useState<Event | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
 

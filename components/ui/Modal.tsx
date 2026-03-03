@@ -6,7 +6,7 @@
 'use client';
 
 import * as React from 'react';
-import { cva, type VariantProps } from 'class-variance-authority';
+import { cva } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 import { X } from 'lucide-react';
 
@@ -366,12 +366,6 @@ const AlertModal = ({
         </svg>
       </div>
     ),
-  };
-
-  const confirmButtonVariant = {
-    danger: 'destructive' as const,
-    warning: 'primary' as const,
-    info: 'primary' as const,
   };
 
   return (

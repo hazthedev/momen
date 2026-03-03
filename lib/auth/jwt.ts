@@ -17,9 +17,6 @@ const JWT_REFRESH_SECRET = new TextEncoder().encode(
   process.env.JWT_REFRESH_SECRET || 'fallback-refresh-secret-change-in-production'
 );
 
-const ACCESS_TOKEN_EXPIRY = '15m';
-const REFRESH_TOKEN_EXPIRY = '7 days';
-
 // ============================================
 // TOKEN PAYLOADS
 // ============================================
@@ -99,7 +96,7 @@ export async function verifyAccessToken(token: string): Promise<AccessTokenPaylo
       audience: 'momen-api',
     });
 
-    return payload as AccessTokenPayload;
+    return payload as unknown as AccessTokenPayload;
   } catch (error) {
     throw new Error('Invalid or expired access token');
   }
@@ -112,7 +109,7 @@ export async function verifyRefreshToken(token: string): Promise<RefreshTokenPay
       audience: 'momen-refresh',
     });
 
-    return payload as RefreshTokenPayload;
+    return payload as unknown as RefreshTokenPayload;
   } catch (error) {
     throw new Error('Invalid or expired refresh token');
   }

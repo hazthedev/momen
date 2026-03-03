@@ -42,6 +42,7 @@ interface PublicEvent {
 
 interface IPhoto {
   id: string;
+  tenantId: string;
   eventId: string;
   uploadedById: string | null;
   caption: string | null;
@@ -50,9 +51,9 @@ interface IPhoto {
   thumbnailUrl: string;
   mediumUrl: string;
   largeUrl: string;
-  metadata: { width: number; height: number; format: string; size: number } | null;
-  uploadedAt: string;
-  processedAt: string | null;
+  metadata: { width: number; height: number; format: string; size: number };
+  uploadedAt: Date;
+  processedAt: Date | null;
 }
 
 type Tab = 'gallery' | 'upload';

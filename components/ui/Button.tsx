@@ -226,10 +226,11 @@ const ButtonGroup = React.forwardRef<HTMLDivElement, ButtonGroupProps>(
       >
         {React.Children.map(children, (child, i) => {
           if (React.isValidElement(child)) {
+            const childProps = child.props as React.HTMLAttributes<HTMLElement>;
             return React.cloneElement(child, {
-              ...child.props,
+              ...childProps,
               className: cn(
-                child.props.className,
+                childProps.className,
                 'rounded-none',
                 'shadow-none',
                 i !== 0 && orientation === 'horizontal' && 'border-l border-slate/20',
@@ -243,7 +244,7 @@ const ButtonGroup = React.forwardRef<HTMLDivElement, ButtonGroupProps>(
                   orientation === 'vertical' &&
                   'rounded-b-md'
               ),
-            });
+            } as React.HTMLAttributes<HTMLElement>);
           }
           return child;
         })}

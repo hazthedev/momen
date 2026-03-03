@@ -7,7 +7,7 @@
 
 import { useState, useCallback, useEffect } from 'react';
 import Image from 'next/image';
-import { X, Download, Heart, Check, X as RejectIcon, Loader2 } from 'lucide-react';
+import { X, Download, Heart, Check, X as RejectIcon } from 'lucide-react';
 import type { IPhoto } from '@/lib/validation/photo.schema';
 
 interface PhotoGalleryProps {
@@ -85,7 +85,7 @@ export function PhotoGallery({
   return (
     <div className="space-y-4">
       {/* Bulk Actions Bar */}
-      {mode === 'manage' && onSelectionChange && selectedIds.length > 0 && (
+      {(mode === 'manage' || mode === 'approve') && onSelectionChange && selectedIds.length > 0 && (
         <div className="sticky top-0 z-20 bg-card border border-default rounded-lg p-3 flex items-center justify-between">
           <span className="text-sm text-slate">
             {selectedIds.length} photo{selectedIds.length === 1 ? '' : 's'} selected

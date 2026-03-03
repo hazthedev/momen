@@ -97,7 +97,7 @@ export function withValidation<T extends object>(
 /**
  * Return a standardized success response
  */
-export function successResponse<T>(data: T, meta?: unknown) {
+export function successResponse<T>(data: T, meta?: Record<string, unknown>) {
   return NextResponse.json({
     success: true,
     data,
@@ -112,7 +112,7 @@ export function errorResponse(
   code: string,
   message: string,
   statusCode: number = 500,
-  details?: unknown
+  details?: Record<string, unknown>
 ) {
   return NextResponse.json(
     {

@@ -20,6 +20,7 @@ interface DashboardStats {
 interface RecentEvent {
   id: string;
   name: string;
+  slug: string;
   shortCode: string;
   description: string | null;
   startDate: Date;
@@ -30,6 +31,8 @@ interface RecentEvent {
   photo_count?: number;
   createdAt: Date;
   updatedAt: Date;
+  tenantId: string;
+  organizerId: string;
 }
 
 export default function DashboardPage() {

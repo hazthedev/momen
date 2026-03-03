@@ -8,11 +8,11 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { EventList } from '@/components/events/EventList';
-import type { IEvent } from '@/lib/db/schema';
+import type { Event } from '@/lib/db/schema';
 
 export default function EventsPage() {
   const router = useRouter();
-  const [events, setEvents] = useState<IEvent[]>([]);
+  const [events, setEvents] = useState<Event[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {

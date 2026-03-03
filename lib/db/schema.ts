@@ -4,7 +4,6 @@
  */
 
 import { pgTable, text, uuid, timestamp, boolean, integer, jsonb, index, uniqueIndex } from 'drizzle-orm/pg-core';
-import { sql } from 'drizzle-orm';
 
 // ============================================
 // ENUMS (using check constraints for Drizzle)

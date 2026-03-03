@@ -4,7 +4,7 @@
  */
 
 import Redis from 'ioredis';
-import { randomBytes, createHash } from 'crypto';
+import { randomBytes } from 'crypto';
 
 // ============================================
 // REDIS CLIENT

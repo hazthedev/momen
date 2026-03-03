@@ -8,10 +8,17 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Calendar, MapPin, Info, Settings, Loader2 } from 'lucide-react';
-import type { IEvent, EventSettings } from '@/lib/db/schema';
+import type { Event } from '@/lib/db/schema';
+
+interface EventSettings {
+  photoApproval?: boolean;
+  maxPhotos?: number;
+  autoApprove?: boolean;
+  allowGuestUpload?: boolean;
+}
 
 interface EventFormProps {
-  event?: IEvent;
+  event?: Event;
   onSubmit: (data: EventFormData) => Promise<void>;
   isLoading?: boolean;
 }
