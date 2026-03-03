@@ -319,8 +319,8 @@ export default function PublicGalleryPage() {
               <button
                 onClick={() => setSelectedTab('gallery')}
                 className={`py-3 px-4 text-sm font-medium border-b-2 transition-colors ${selectedTab === 'gallery'
-                    ? 'border-white text-white'
-                    : 'border-transparent text-white/60 hover:text-white/90'
+                  ? 'border-white text-white'
+                  : 'border-transparent text-white/60 hover:text-white/90'
                   }`}
               >
                 <span className="flex items-center gap-1.5">
@@ -333,8 +333,8 @@ export default function PublicGalleryPage() {
                 <button
                   onClick={() => setSelectedTab('upload')}
                   className={`py-3 px-4 text-sm font-medium border-b-2 transition-colors ${selectedTab === 'upload'
-                      ? 'border-white text-white'
-                      : 'border-transparent text-white/60 hover:text-white/90'
+                    ? 'border-white text-white'
+                    : 'border-transparent text-white/60 hover:text-white/90'
                     }`}
                 >
                   <span className="flex items-center gap-1.5">
