@@ -1,8 +1,48 @@
-# ============================================
-# ENVIRONMENT SECRETS VALIDATION SCRIPT
-# ============================================
-# Run this script to verify all required environment variables are set
-# Usage: node scripts/validate-env.js
+// ============================================
+// ENVIRONMENT SECRETS VALIDATION SCRIPT
+// ============================================
+// Run this script to verify all required environment variables are set
+// Usage: node scripts/validate-env.js
+
+// Load environment variables from .env.local
+const path = require('path');
+const fs = require('fs');
+
+function loadEnvFile(filePath) {
+  try {
+    const content = fs.readFileSync(filePath, 'utf-8');
+    const lines = content.split('\n');
+
+    for (const line of lines) {
+      const trimmedLine = line.trim();
+      // Skip comments and empty lines
+      if (trimmedLine.startsWith('#') || !trimmedLine) {
+        continue;
+      }
+
+      // Parse KEY=VALUE format
+      const match = trimmedLine.match(/^([^=]+)=(.*)$/);
+      if (match) {
+        const key = match[1].trim();
+        let value = match[2].trim();
+
+        // Remove quotes if present
+        if ((value.startsWith('"') && value.endsWith('"')) ||
+            (value.startsWith("'") && value.endsWith("'"))) {
+          value = value.slice(1, -1);
+        }
+
+        process.env[key] = value;
+      }
+    }
+  } catch (error) {
+    // File doesn't exist or can't be read - that's ok
+  }
+}
+
+// Try to load .env.local first, then .env
+loadEnvFile(path.join(__dirname, '..', '.env.local'));
+loadEnvFile(path.join(__dirname, '..', '.env'));
 
 const requiredVars = [
   'DATABASE_URL',

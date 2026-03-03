@@ -3,7 +3,7 @@
  * Multi-tenant PostgreSQL with connection pooling
  */
 
-import { drizzle } from 'drizzle-orm/postgres-js';
+import { drizzle } from 'drizzle-orm/node-postgres';
 import pg from 'pg';
 import * as schema from './schema';
 
@@ -12,8 +12,16 @@ import * as schema from './schema';
 // ============================================
 const isVercel = process.env.VERCEL || process.env.VERCEL_ENV;
 
+// Validate DATABASE_URL is set
+if (!process.env.DATABASE_URL) {
+  throw new Error(
+    'DATABASE_URL environment variable is not set. ' +
+    'Please ensure DATABASE_URL is configured in your environment.'
+  );
+}
+
 const poolConfig = {
-  connectionString: process.env.DATABASE_URL!,
+  connectionString: process.env.DATABASE_URL,
   // Serverless (Vercel): Use fewer connections per function
   // Local development: Use higher pool for performance
   min: parseInt(process.env.DATABASE_POOL_MIN || (isVercel ? '0' : '2'), 10),
@@ -28,21 +36,36 @@ let pool: pg.Pool | null = null;
 
 export function getPool(): pg.Pool {
   if (!pool) {
-    pool = new pg.Pool(poolConfig);
+    // Double-check DATABASE_URL is still available
+    if (!process.env.DATABASE_URL) {
+      throw new Error(
+        'DATABASE_URL environment variable is not set. ' +
+        'Cannot initialize database connection pool.'
+      );
+    }
 
-    // Pool event logging (development only)
-    if (process.env.NODE_ENV === 'development') {
-      pool.on('connect', (client) => {
-        console.log('[DB] New client connected');
-      });
+    try {
+      pool = new pg.Pool(poolConfig);
 
-      pool.on('remove', (client) => {
-        console.log('[DB] Client removed');
-      });
+      // Pool event logging (development only)
+      if (process.env.NODE_ENV === 'development') {
+        pool.on('connect', (client) => {
+          console.log('[DB] New client connected');
+        });
 
-      pool.on('error', (err) => {
-        console.error('[DB] Unexpected error on idle client', err);
-      });
+        pool.on('remove', (client) => {
+          console.log('[DB] Client removed');
+        });
+
+        pool.on('error', (err) => {
+          console.error('[DB] Unexpected error on idle client', err);
+        });
+      }
+    } catch (error) {
+      console.error('[DB] Failed to create connection pool:', error);
+      throw new Error(
+        `Failed to initialize database connection pool: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   }
 
