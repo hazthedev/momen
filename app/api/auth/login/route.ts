@@ -61,7 +61,7 @@ export async function POST(request: NextRequest) {
       userId: user.id,
       tenantId: user.tenantId,
       email: user.email,
-      name: user.name,
+      name: user.name ?? undefined,
       role: user.role,
       rememberMe,
     });
@@ -71,7 +71,7 @@ export async function POST(request: NextRequest) {
       id: user.id,
       tenantId: user.tenantId,
       email: user.email,
-      name: user.name,
+      name: user.name ?? undefined,
       role: user.role,
     });
 
