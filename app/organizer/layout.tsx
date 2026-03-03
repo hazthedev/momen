@@ -9,7 +9,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Camera, LayoutDashboard, Calendar, Image, Users, Settings, LogOut, Menu, X } from 'lucide-react';
+import { Camera, LayoutDashboard, Calendar, Image, Settings, LogOut, Menu, X } from 'lucide-react';
 import { useAuth } from '@/lib/auth/providers';
 
 const navItems = [
@@ -73,11 +73,10 @@ export default function OrganizerLayout({
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                    isActive
-                      ? 'bg-slate/10 text-slate'
-                      : 'text-sky hover:text-slate hover:bg-cream/40'
-                  }`}
+                  className={`flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-colors ${isActive
+                    ? 'bg-slate/10 text-slate'
+                    : 'text-sky hover:text-slate hover:bg-cream/40'
+                    }`}
                 >
                   <item.icon className="w-4 h-4" />
                   {item.label}
@@ -91,12 +90,12 @@ export default function OrganizerLayout({
             {/* User Menu */}
             <div className="hidden sm:flex items-center gap-3">
               <div className="text-right">
-                <p className="text-sm font-medium text-slate">{user.name}</p>
+                <p className="text-sm font-medium text-slate">{user.name ?? user.email}</p>
                 <p className="text-xs text-sky">{user.email}</p>
               </div>
               <div className="w-9 h-9 bg-sky/20 rounded-full flex items-center justify-center">
                 <span className="text-sm font-medium text-sky">
-                  {user.name.charAt(0).toUpperCase()}
+                  {(user.name ?? user.email).charAt(0).toUpperCase()}
                 </span>
               </div>
             </div>
@@ -131,11 +130,10 @@ export default function OrganizerLayout({
                     key={item.href}
                     href={item.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`flex items-center gap-3 px-4 py-2 text-sm font-medium transition-colors ${
-                      isActive
-                        ? 'bg-slate/10 text-slate'
-                        : 'text-sky hover:text-slate hover:bg-cream/40'
-                    }`}
+                    className={`flex items-center gap-3 px-4 py-2 text-sm font-medium transition-colors ${isActive
+                      ? 'bg-slate/10 text-slate'
+                      : 'text-sky hover:text-slate hover:bg-cream/40'
+                      }`}
                   >
                     <item.icon className="w-4 h-4" />
                     {item.label}
@@ -149,11 +147,11 @@ export default function OrganizerLayout({
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 bg-sky/20 rounded-full flex items-center justify-center">
                   <span className="text-sm font-medium text-sky">
-                    {user.name.charAt(0).toUpperCase()}
+                    {(user.name ?? user.email).charAt(0).toUpperCase()}
                   </span>
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-slate">{user.name}</p>
+                  <p className="text-sm font-medium text-slate">{user.name ?? user.email}</p>
                   <p className="text-xs text-sky">{user.email}</p>
                 </div>
               </div>

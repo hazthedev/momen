@@ -6,22 +6,20 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter, useParams } from 'next/navigation';
-import { ArrowLeft, Upload, Filter, Check } from 'lucide-react';
+import { useParams } from 'next/navigation';
+import { ArrowLeft, Filter, Check } from 'lucide-react';
 import Link from 'next/link';
 import { PhotoUpload } from '@/components/photos/PhotoUpload';
 import { PhotoGallery } from '@/components/photos/PhotoGallery';
-import type { IEvent } from '@/lib/db/schema';
 import type { IPhoto } from '@/lib/validation/photo.schema';
 
 type StatusFilter = 'all' | 'pending' | 'approved' | 'rejected';
 
 export default function EventPhotosPage() {
-  const router = useRouter();
   const params = useParams();
   const eventId = params.id as string;
 
-  const [event, setEvent] = useState<IEvent | null>(null);
+  const [event, setEvent] = useState<{ id: string; name: string; shortCode: string } | null>(null);
   const [photos, setPhotos] = useState<IPhoto[]>([]);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('approved');
@@ -225,22 +223,20 @@ export default function EventPhotosPage() {
         <div className="flex items-center gap-6">
           <button
             onClick={() => setStatusFilter('approved')}
-            className={`pb-3 px-1 text-sm font-medium border-b-2 transition-colors ${
-              statusFilter === 'approved'
+            className={`pb-3 px-1 text-sm font-medium border-b-2 transition-colors ${statusFilter === 'approved'
                 ? 'border-slate text-slate'
                 : 'border-transparent text-sky hover:text-slate'
-            }`}
+              }`}
           >
             Approved
           </button>
           {pendingCount > 0 && (
             <button
               onClick={() => setStatusFilter('pending')}
-              className={`pb-3 px-1 text-sm font-medium border-b-2 transition-colors relative ${
-                statusFilter === 'pending'
+              className={`pb-3 px-1 text-sm font-medium border-b-2 transition-colors relative ${statusFilter === 'pending'
                   ? 'border-slate text-slate'
                   : 'border-transparent text-sky hover:text-slate'
-              }`}
+                }`}
             >
               Pending
               <span className="absolute -top-1 -right-2 w-4 h-4 bg-warning text-white text-xs rounded-full flex items-center justify-center">
@@ -250,21 +246,19 @@ export default function EventPhotosPage() {
           )}
           <button
             onClick={() => setStatusFilter('rejected')}
-            className={`pb-3 px-1 text-sm font-medium border-b-2 transition-colors ${
-              statusFilter === 'rejected'
+            className={`pb-3 px-1 text-sm font-medium border-b-2 transition-colors ${statusFilter === 'rejected'
                 ? 'border-slate text-slate'
                 : 'border-transparent text-sky hover:text-slate'
-            }`}
+              }`}
           >
             Rejected
           </button>
           <button
             onClick={() => setStatusFilter('all')}
-            className={`pb-3 px-1 text-sm font-medium border-b-2 transition-colors ${
-              statusFilter === 'all'
+            className={`pb-3 px-1 text-sm font-medium border-b-2 transition-colors ${statusFilter === 'all'
                 ? 'border-slate text-slate'
                 : 'border-transparent text-sky hover:text-slate'
-            }`}
+              }`}
           >
             All
           </button>

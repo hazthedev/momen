@@ -18,7 +18,7 @@ const shortCodeSchema = z.object({
 // ============================================
 // GET /api/events/code/[code] - Get event by short code
 // ============================================
-export async function GET(request: NextRequest, context: RouteContext) {
+export async function GET(_request: NextRequest, context: RouteContext) {
   try {
     // Validate short code
     const params = await context.params;

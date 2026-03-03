@@ -6,7 +6,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getSession } from '@/lib/auth/session';
 import { PhotoService } from '@/lib/services/photo.service';
-import { uploadPhotoSchema, photoQuerySchema } from '@/lib/validation/photo.schema';
+import { photoQuerySchema } from '@/lib/validation/photo.schema';
 
 // ============================================
 // POST /api/photos - Upload photo

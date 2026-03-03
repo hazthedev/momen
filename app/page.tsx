@@ -3,7 +3,6 @@
  * Public homepage with call-to-action for organizers and guests
  */
 
-import { Suspense } from 'react';
 import Link from 'next/link';
 import { Camera, Users, Zap } from 'lucide-react';
 

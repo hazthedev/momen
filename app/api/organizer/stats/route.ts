@@ -43,18 +43,6 @@ export async function GET(request: NextRequest) {
     const photoService = new PhotoService(tenantId);
     const storageUsage = await photoService.getStorageUsage();
 
-    // Calculate total photos across all events
-    let totalPhotos = 0;
-    const recentUploads = 0;
-    const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
-
-    for (const event of allEvents) {
-      const eventPhotos = await photoService.getApproved(event.id);
-      totalPhotos += eventPhotos.length;
-
-      // Count recent uploads (this is a simplified approach)
-      // In production, you'd want a more efficient query
-    }
 
     return NextResponse.json({
       success: true,
