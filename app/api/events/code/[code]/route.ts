@@ -4,7 +4,6 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { EventService } from '@/lib/services/event.service';
 import { z } from 'zod';
 
 type RouteContext = {
