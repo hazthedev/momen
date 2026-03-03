@@ -3,6 +3,10 @@
  * Calming blue palette with warm cream backgrounds
  */
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   /* ============================================
      PRIMARY PALETTE
