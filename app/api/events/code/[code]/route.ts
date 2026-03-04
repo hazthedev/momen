@@ -35,9 +35,12 @@ export async function GET(_request: NextRequest, context: RouteContext) {
     const { eq } = await import('drizzle-orm');
 
     // Find event by short code (cross-tenant lookup)
-    const event = await db.query.events.findFirst({
-      where: eq(events.shortCode, code.toLowerCase()),
-    });
+    const result = await db.select()
+      .from(events)
+      .where(eq(events.shortCode, code.toLowerCase()))
+      .limit(1);
+
+    const event = result[0] || null;
 
     if (!event) {
       return NextResponse.json(

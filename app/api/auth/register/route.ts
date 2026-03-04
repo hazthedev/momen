@@ -64,9 +64,12 @@ export async function POST(request: NextRequest) {
     }
 
     // Check if email already exists
-    const existingUser = await db.query.users.findFirst({
-      where: eq(users.email, email.toLowerCase()),
-    });
+    const result = await db.select()
+      .from(users)
+      .where(eq(users.email, email.toLowerCase()))
+      .limit(1);
+
+    const existingUser = result[0] || null;
 
     if (existingUser) {
       return NextResponse.json(

@@ -34,9 +34,12 @@ export async function GET(request: NextRequest) {
     }
 
     // Get user from database
-    const user = await db.query.users.findFirst({
-      where: eq(users.id, session.userId),
-    });
+    const result = await db.select()
+      .from(users)
+      .where(eq(users.id, session.userId))
+      .limit(1);
+
+    const user = result[0] || null;
 
     if (!user) {
       return NextResponse.json(

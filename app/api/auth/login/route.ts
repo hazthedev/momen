@@ -32,9 +32,12 @@ export async function POST(request: NextRequest) {
     const { email, password, rememberMe } = loginSchema.parse(body);
 
     // Find user by email (search all tenants)
-    const user = await db.query.users.findFirst({
-      where: eq(users.email, email.toLowerCase()),
-    });
+    const result = await db.select()
+      .from(users)
+      .where(eq(users.email, email.toLowerCase()))
+      .limit(1);
+
+    const user = result[0] || null;
 
     if (!user) {
       return NextResponse.json(
