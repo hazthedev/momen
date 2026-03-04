@@ -84,6 +84,14 @@ export class EventService {
     const tenantDb = getTenantDb(this.tenantId);
     const { search, status, limit = 50, offset = 0, sortBy = 'created_at', sortOrder = 'desc' } = filters;
 
+    // Map sort column string to actual column reference
+    const sortColumnMap: Record<string, any> = {
+      created_at: events.createdAt,
+      start_date: events.startDate,
+      name: events.name,
+    };
+    const sortColumn = sortColumnMap[sortBy] || events.createdAt;
+
     const query = tenantDb.query.events.findMany({
       where: (events, { eq }) => {
         const conditions = [eq(events.tenantId, this.tenantId)];
@@ -98,7 +106,7 @@ export class EventService {
 
         return and(...conditions);
       },
-      orderBy: sortOrder === 'asc' ? asc(sortBy) : desc(sortBy),
+      orderBy: sortOrder === 'asc' ? asc(sortColumn) : desc(sortColumn),
       limit,
       offset,
     });
@@ -144,8 +152,6 @@ export class EventService {
    * Get event with photo count
    */
   async getWithPhotoCount(eventId: string): Promise<EventWithPhotoCount | null> {
-    const tenantDb = getTenantDb(this.tenantId);
-
     // This would require joining with photos table - for now, get event and count separately
     const event = await this.getById(eventId);
     if (!event) return null;
@@ -175,10 +181,10 @@ export class EventService {
     let attempts = 0;
 
     while (!isUnique && attempts < 10) {
-      code = crypto.randomBytes(3).toString('base64')
-        .replace(/[^a-zA-Z0-9]/g, '')
-        .substring(0, 6)
-        .toLowerCase();
+      // Use Web Crypto API for random string generation
+      const array = new Uint8Array(6);
+      crypto.getRandomValues(array);
+      code = Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('').substring(0, 6);
 
       const existing = await tenantDb.findOne(events, { shortCode: code });
       isUnique = !existing;

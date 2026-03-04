@@ -72,7 +72,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       }
 
       const data = await response.json();
-      setUser(data.user);
+      setUser(data.data.user);
     } catch (err) {
       setError('Failed to connect to server');
     } finally {
@@ -98,7 +98,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         return;
       }
 
-      setUser(data.user);
+      setUser(data.data.user);
     } catch (err) {
       setError('Network error during login');
     } finally {
@@ -124,7 +124,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         return;
       }
 
-      setUser(data.user);
+      setUser(data.data.user);
     } catch (err) {
       setError('Network error during registration');
     } finally {

@@ -3,7 +3,7 @@
  * Loads images from R2 public URLs
  */
 
-export default function cloudflareR2Loader({ src, width, quality }: {
+export default function cloudflareR2Loader({ src, width: _width, quality: _quality }: {
   src: string;
   width: number;
   quality?: number;

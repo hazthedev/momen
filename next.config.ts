@@ -52,7 +52,7 @@ const nextConfig = {
   },
 
   // Webpack configuration - simplified for Next.js 15
-  webpack: (config, { isServer }) => {
+  webpack: (config: any, { isServer }: { isServer: boolean }) => {
     // Next.js 15 has better polyfill handling, but we keep this for compatibility
     if (!isServer) {
       config.resolve.fallback = {

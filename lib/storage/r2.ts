@@ -38,7 +38,7 @@ export interface UploadOptions {
 // ============================================
 
 export class R2StorageService {
-  private client: ReturnType<typeof import('@aws-sdk/client-s3').S3Client>;
+  private client: S3Client;
   private bucketName: string;
   private publicUrl: string;
 

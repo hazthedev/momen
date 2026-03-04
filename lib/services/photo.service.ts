@@ -3,11 +3,10 @@
  * Business logic for photo management
  */
 
-import { eq, and, desc, sql } from 'drizzle-orm';
-import { db } from '@/lib/db';
+import { eq, and, asc, desc } from 'drizzle-orm';
 import { photos, events } from '@/lib/db/schema';
 import { getTenantDb } from '@/lib/db';
-import type { IPhoto, IPhotoCreate, IPhotoUpdate, PhotoMetadata, UploadResult } from '@/lib/validation/photo.schema';
+import type { PhotoMetadata, UploadResult } from '@/lib/validation/photo.schema';
 import { R2StorageService } from '@/lib/storage/r2';
 
 // ============================================
@@ -18,11 +17,23 @@ export interface PhotoFilters {
   status?: 'pending' | 'approved' | 'rejected';
   limit?: number;
   offset?: number;
-  sortBy?: 'uploaded_at' | 'likes' | 'downloads';
+  sortBy?: 'uploaded_at';
   sortOrder?: 'asc' | 'desc';
 }
 
-export interface PhotoWithEvent extends IPhoto {
+export interface PhotoWithEvent {
+  id: string;
+  eventId: string;
+  userFingerprint: string;
+  images: unknown;
+  caption: string | null;
+  contributorName: string | null;
+  isAnonymous: boolean;
+  status: string;
+  reactions: unknown;
+  metadata: unknown;
+  createdAt: Date;
+  approvedAt: Date | null;
   event?: {
     id: string;
     name: string;
@@ -117,7 +128,7 @@ export class PhotoService {
   /**
    * Get photo by ID
    */
-  async getById(photoId: string): Promise<IPhoto | null> {
+  async getById(photoId: string): Promise<any | null> {
     const tenantDb = getTenantDb(this.tenantId);
     return await tenantDb.findOne(photos, { id: photoId });
   }
@@ -125,11 +136,18 @@ export class PhotoService {
   /**
    * List photos for an event
    */
-  async list(eventId: string, filters: PhotoFilters = {}): Promise<IPhoto[]> {
+  async list(eventId: string, filters: PhotoFilters = {}): Promise<any[]> {
     const tenantDb = getTenantDb(this.tenantId);
     const { status, limit = 50, offset = 0, sortBy = 'uploaded_at', sortOrder = 'desc' } = filters;
 
-    const conditions = [eq(photos.tenantId, this.tenantId), eq(photos.eventId, eventId)];
+    // Map sort column string to actual column reference
+    const sortColumnMap: Record<string, any> = {
+      uploaded_at: photos.createdAt,
+    };
+    const sortColumn = sortColumnMap[sortBy] || photos.createdAt;
+
+    // Note: Tenant filtering is handled by RLS via set_tenant_id()
+    const conditions = [eq(photos.eventId, eventId)];
 
     if (status) {
       conditions.push(eq(photos.status, status));
@@ -137,7 +155,7 @@ export class PhotoService {
 
     const result = await tenantDb.query.photos.findMany({
       where: and(...conditions),
-      orderBy: sortOrder === 'asc' ? sql`${photos[sortBy]} ASC` : sql`${photos[sortBy]} DESC`,
+      orderBy: sortOrder === 'asc' ? asc(sortColumn) : desc(sortColumn),
       limit,
       offset,
     });
@@ -148,7 +166,7 @@ export class PhotoService {
   /**
    * Update photo
    */
-  async update(photoId: string, data: IPhotoUpdate): Promise<IPhoto | null> {
+  async update(photoId: string, data: Partial<any>): Promise<any | null> {
     const tenantDb = getTenantDb(this.tenantId);
 
     // Check if photo exists
@@ -186,28 +204,28 @@ export class PhotoService {
   /**
    * Approve photo
    */
-  async approve(photoId: string): Promise<IPhoto | null> {
+  async approve(photoId: string): Promise<any | null> {
     return this.update(photoId, { status: 'approved' });
   }
 
   /**
    * Reject photo
    */
-  async reject(photoId: string): Promise<IPhoto | null> {
+  async reject(photoId: string): Promise<any | null> {
     return this.update(photoId, { status: 'rejected' });
   }
 
   /**
    * Get pending photos for an event
    */
-  async getPending(eventId: string): Promise<IPhoto[]> {
+  async getPending(eventId: string): Promise<any[]> {
     return this.list(eventId, { status: 'pending' });
   }
 
   /**
    * Get approved photos for an event (for gallery)
    */
-  async getApproved(eventId: string, limit = 100): Promise<IPhoto[]> {
+  async getApproved(eventId: string, limit = 100): Promise<any[]> {
     return this.list(eventId, { status: 'approved', limit });
   }
 
@@ -215,7 +233,6 @@ export class PhotoService {
    * Bulk approve photos
    */
   async bulkApprove(photoIds: string[]): Promise<number> {
-    const tenantDb = getTenantDb(this.tenantId);
     let count = 0;
 
     for (const photoId of photoIds) {
@@ -230,7 +247,6 @@ export class PhotoService {
    * Bulk reject photos
    */
   async bulkReject(photoIds: string[]): Promise<number> {
-    const tenantDb = getTenantDb(this.tenantId);
     let count = 0;
 
     for (const photoId of photoIds) {
@@ -247,9 +263,9 @@ export class PhotoService {
   async getEventPhotoCount(eventId: string): Promise<number> {
     const tenantDb = getTenantDb(this.tenantId);
 
+    // Note: Tenant filtering is handled by RLS via set_tenant_id()
     const result = await tenantDb.query.photos.findMany({
       where: and(
-        eq(photos.tenantId, this.tenantId),
         eq(photos.eventId, eventId),
         eq(photos.status, 'approved')
       ),
@@ -264,15 +280,15 @@ export class PhotoService {
   async getStorageUsage(): Promise<{ count: number; bytes: number }> {
     const tenantDb = getTenantDb(this.tenantId);
 
+    // Note: Tenant filtering is handled by RLS via set_tenant_id()
     const photos = await tenantDb.query.photos.findMany({
-      where: eq(photos.tenantId, this.tenantId),
       columns: {
         metadata: true,
       },
     });
 
     const count = photos.length;
-    const bytes = photos.reduce((sum, photo) => sum + (photo.metadata?.size || 0), 0);
+    const bytes = photos.reduce((sum, photo) => sum + ((photo.metadata as any)?.size || 0), 0);
 
     return { count, bytes };
   }

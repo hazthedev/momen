@@ -38,7 +38,7 @@ export const photoQuerySchema = z.object({
   status: z.enum(['pending', 'approved', 'rejected']).optional(),
   limit: z.coerce.number().int().positive().max(100).default(50),
   offset: z.coerce.number().int().nonnegative().default(0),
-  sortBy: z.enum(['uploaded_at', 'likes', 'downloads']).default('uploaded_at'),
+  sortBy: z.enum(['uploaded_at']).default('uploaded_at'),
   sortOrder: z.enum(['asc', 'desc']).default('desc'),
 });
 
